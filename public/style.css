@@ -1,0 +1,14 @@
+#placeholder {
+	height: 90%;
+	width: 90%;
+}
+
+#directionText {
+	font-family: Verdana; 
+	font-size: 25px;
+	fill: white
+}
+
+#highlight {
+	fill: green;
+}
