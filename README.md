@@ -31,7 +31,8 @@ YouTube Video of Drone in Flight
 
 http://youtu.be/hfq2SisPvCU
 
-Thanks
+Next steps
 =======================
 
-Thanks to @phillipalexander for introducing me to Faye, @felixge for AR-Drone and @bkw for Dronestream
+Try to enable other commands than just take off, rotate and land.
+Pair with the Myo armband.
