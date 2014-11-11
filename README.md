@@ -1,16 +1,17 @@
 Description
 =======================
 
-Control an AR Drone 2.0 using a Leap Motion / keyboard and display video & control visualization in browser.
+Control an AR Drone 2.0 using a Leap Motion and display video & control visualization in browser.
 
 How to Fly
 =======================
 
-1. Hold hand above Leap Motion controller
-2. To takeoff, gesture with your pointer finger as though left clicking a mouse
-3. Keeping fingers together as though saluting, move hand right to move drone right, up to move drone up and forward to move drone forward
-4. To rotate, make a circle with pointer finger in a clockwise or counterclockwise motion
-5. To land, gesture with pointer finger as though left clicking a mouse
+(TODO: Need to improve commands. May be really sensitive.)
+
+1. To takeoff, hold hand over Leap Motion.
+2. Keeping fingers together, move hand right to move drone right, left to move drone left, up to move drone up, down to move drone down, forward to move drone forward and backward to move drone backwards.
+3. To rotate, make a circle with pointer finger in a clockwise or counterclockwise motion.
+4. To land, remove hand.
 
 Stack
 =======================
@@ -19,20 +20,16 @@ Node.js for server
 Express for web app deployment
 Faye for publishing and subscribing between leap, server and drone
 Leap.js for converting leap motions into javascript
-jQuery for browser displays and accessing keypresses for optional keyboard controls
+jQuery for browser displays
 
 Learn More
 =======================
 
-http://wp.me/p2BKrb-4k - Read my blog post about why I did this and what I hope for the future
-
-YouTube Video of Drone in Flight
-=======================
-
-http://youtu.be/hfq2SisPvCU
+Coming soon - blog post explaining how I did this.
 
 Next steps
 =======================
 
-Try to enable other commands than just take off, rotate and land.
+Improve the commands to make the 'stop' functionality work.
+Change the gesture to take off and land.
 Pair with the Myo armband.
