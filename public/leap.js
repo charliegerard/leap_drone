@@ -136,21 +136,21 @@ var droneCommandsHandler = function () {
       var adjustZspeed = Math.abs(adjustZ) / speedAdjuster; // front/back speed
 
       if (adjustX < 0 && flying) {
-        return goLeft();
+        // return goLeft();
       } else if (adjustX > 0 && flying) {
-        return goRight();
+        // return goRight();
       }
 
       if (adjustY > 0.4 && flying) {
-        return goUp();
+        // return goUp();
       } else if (adjustY < 0.4 && flying) {
-        return goDown();
+        // return goDown();
       }
 
       if (adjustZ < 0 && flying) {
-        return goForward();
+        // return goForward();
       } else if (adjustZ > 0 && flying) {
-        return goBackwards();
+        // return goBackwards();
       }
     };
   };

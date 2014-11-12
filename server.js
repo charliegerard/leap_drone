@@ -9,33 +9,15 @@
   faye = require('faye');
   Leap = require('leapjs');
   drone = require("ar-drone").createClient(); // enables communication with drone in javascript
-  //Calls all methods inside module and prints out "Connecting to drone on 192...."
   require("dronestream").listen(3001); // for video rendering
   app = express();
 
 var env = process.env.NODE_ENV || 'development';
 if('development' == env){
-   app.set('port', process.env.PORT || 3000); // process.env.PORT adjusts PORT to accept environmental parameter (ie deploying to Heroku)
-    // app.use(app.router);  // optimizes performance when put before static, but isn't necessary as express will implicity add.  Putting before static prevents accidentally-named static files from overwriting routes
-    app.use(express.static(__dirname + '/public')); // serves static files from disk
-    // app.use(express.static(path.join(__dirname, '/src')));
-    // app.use(express.static(__dirname + '/src'));
-
-    // return app.use("/node_modules", express.static(path.join(__dirname, 'node_modules'))); // adds in jQuery
-    app.use("/node_modules", express.static(path.join(__dirname, 'node_modules')))
+  app.set('port', process.env.PORT || 3000); // process.env.PORT adjusts PORT to accept environmental parameter (ie deploying to Heroku)
+  app.use(express.static(__dirname + '/public')); // serves static files from disk
+  app.use("/node_modules", express.static(path.join(__dirname, 'node_modules')))
 }
-  // app.use(function () {
-    // app.set('port', process.env.PORT || 3000); // process.env.PORT adjusts PORT to accept environmental parameter (ie deploying to Heroku)
-    // app.use(app.router);  // optimizes performance when put before static, but isn't necessary as express will implicity add.  Putting before static prevents accidentally-named static files from overwriting routes
-    // app.use(express.static(__dirname + '/public'));  // serves static files from disk
-    // console.log("stuff stuff")
-    // return app.use("/node_modules", express.static(path.join(__dirname, 'node_modules'))); // adds in jQuery
-
-  // });
-
-//   Leap.loop(function(frame){
-//   console.log(frame.hands.length);
-// });
 
   server = require('http').createServer(app);
 
