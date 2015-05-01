@@ -1,7 +1,7 @@
 Description
 =======================
 
-Control an AR Drone 2.0 using a Leap Motion and display video & control visualization in browser.
+Control a Parrot AR Drone 2.0 using a Leap Motion.
 
 How to Fly
 =======================
@@ -25,7 +25,7 @@ jQuery for browser displays
 Learn More
 =======================
 
-Coming soon - blog post explaining how I did this.
+I also recreated the same project using the Cylon.js framework. You can find a tutorial for this here: https://charliegerard.wordpress.com/2015/01/20/drone-leap-motion-cylon-js/
 
 Next steps
 =======================
