@@ -1,8 +1,10 @@
-var controller, flying, speed, faye, timeout, speedAdjuster, stopped;
+var flying, speed, faye, timeout, speedAdjuster, stopped;
+var direction = "?";
+var pastDirection;
+
+var controller = Leap.loop({frameEventName:'deviceFrame', enableGestures:true});
 
 var droneCommandsHandler = function () {
-  console.log("do i even get in leapjs?")
-  console.log('this is so weird');
 
   faye = new Faye.Client("/faye", {
     timeout: 60 // may need to adjust. If server doesn't send back any data for the given period of time, the client will assume the server has gone away and will attempt to reconnect. Timeout is given in seconds and should be larger than timeout on server side to give the server ample time to respond.
@@ -40,7 +42,7 @@ var droneCommandsHandler = function () {
     setTimeout(function (){
       return faye.publish("/drone/move", {
         action: 'left'
-        // speed: adjustXspeed
+        // speed: speedAdjuster
       })
     }, timeout);
   };
@@ -53,7 +55,7 @@ var droneCommandsHandler = function () {
     setTimeout(function (){
       return faye.publish("/drone/move", {
         action: 'right'
-            // speed: adjustXspeed
+            // speed: speedAdjuster
       })
     }, timeout);
   };
@@ -65,7 +67,7 @@ var droneCommandsHandler = function () {
     setTimeout(function (){
       return faye.publish("/drone/move", {
         action: 'up'
-        // speed: adjustYspeed
+        // speed: speedAdjuster
       })
     }, timeout/2);
   };
@@ -77,7 +79,7 @@ var droneCommandsHandler = function () {
     setTimeout(function (){
       return faye.publish("/drone/move", {
         action: 'down'
-        // speed: adjustYspeed
+        // speed: speedAdjuster
       })
     }, timeout/2);
   };
@@ -90,7 +92,7 @@ var droneCommandsHandler = function () {
     setTimeout(function (){
       return faye.publish("/drone/move", {
         action: 'front'
-        // speed: adjustZspeed
+        // speed: speedAdjuster
       })
     }, timeout/3);
   };
@@ -102,13 +104,13 @@ var droneCommandsHandler = function () {
     setTimeout(function (){
       return faye.publish("/drone/move", {
         action: 'back'
-        // speed: adjustZspeed
+        // speed: speedAdjuster
       })
     }, timeout/3);
   };
 
   var stopDrone = function(){
-    console.log('stooooooooop')
+    console.log('STOP')
     stopped = true;
     setTimeout(function (){
       return faye.publish("/drone/drone", {
@@ -122,35 +124,50 @@ var droneCommandsHandler = function () {
     if (hands.length === 0 && !stopped) {
       stopDrone();
     } else if (hands.length > 0){
+      var previousFrame = controller.frame(1);
       var handOne = hands[0];
-      var position = handOne.palmPosition;
-      var xPosition = position[0];
-      var yPosition = position[1];
-      var zPosition = position[2];
+      var movement = handOne.translation(previousFrame);
+      pastDirection = direction;
 
-      var adjustX = xPosition / 250; // -1.5 to 1.5
-      var adjustXspeed = Math.abs(adjustX)/ speedAdjuster; // left/right speed
-      var adjustY = (yPosition - 60) / 500; // 0 to .8
-      var adjustYspeed = Math.abs(.4-adjustY) // up/down speed
-      var adjustZ = zPosition / 250; // -2 to 2
-      var adjustZspeed = Math.abs(adjustZ) / speedAdjuster; // front/back speed
-
-      if (adjustX < 0 && flying) {
-        // return goLeft();
-      } else if (adjustX > 0 && flying) {
-        // return goRight();
+      if(movement[0] > 4){
+        direction = 'RIGHT'
+      } else if(movement[0] < -4){
+        direction = 'LEFT'
       }
 
-      if (adjustY > 0.4 && flying) {
-        // return goUp();
-      } else if (adjustY < 0.4 && flying) {
-        // return goDown();
+      if(movement[1] > 4){
+        direction = 'UP'
+      } else if(movement[1] < -4){
+        direction = 'DOWN'
       }
 
-      if (adjustZ < 0 && flying) {
-        // return goForward();
-      } else if (adjustZ > 0 && flying) {
-        // return goBackwards();
+      if(movement[2] > 4){
+        direction = 'REVERSE'
+      } else if(movement[2] < -4){
+        direction = 'FORWARD'
+      }
+
+      if(pastDirection != direction){
+        switch (direction) {
+          case 'LEFT':
+            goLeft();
+            break;
+          case 'RIGHT':
+            goRight();
+            break;
+          case 'UP':
+            goUp();
+            break;
+          case 'DOWN':
+            goDown();
+            break;
+          case 'FORWARD':
+            goForward();
+            break;
+          case 'REVERSE':
+            goBackwards();
+            break;
+        }
       }
     };
   };
@@ -179,10 +196,10 @@ var droneCommandsHandler = function () {
   };
 
   var flyingDrone = function(frame){
-    if(frame.hands.length > 0){
+    if(frame.hands.length > 0 && !flying){
       takeoff();
       console.log('taking off');
-    } else {
+    } else if(frame.hands.length === 0 && flying){
       land();
       console.log('landing');
     };
