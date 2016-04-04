@@ -1,3 +1,0 @@
-# Benchmarks
-
-Work in progress ...
