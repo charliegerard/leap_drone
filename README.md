@@ -7,12 +7,13 @@
 * Turn your drone on.
 * Change your wifi network to the drone's one.
 * Run `node server.js` or `npm start`.
+* Go to `localhost: 3000` in your browser.
 
 # How to Fly
 
 *(TODO: Need to improve commands. May be really sensitive.)*
 
-At the moment, **speed is not activated** for indoor demos so drone just takes off and lands.
+At the moment, **speed is not activated** for indoor demos so the drone just takes off and lands.
 To activate speed, go into the leap.js file in the public folder and comment out the `speed` argument passed in the directions functions.
 
 1. To takeoff, hold hand over Leap Motion.
